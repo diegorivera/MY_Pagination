@@ -1,0 +1,54 @@
+h1. MY_Pagination extend for Codeigniter
+
+A simple Pagination extension to make working with pagination a bit easier.
+I created this lib because I had URIs in my app in which the paging element was not always in the same segment, which makes it a pain if you work with the default pagination class.
+
+This simple lib accomplishes the following:
+* It determines waht the 'base_url' is, so you don't have to set it yourself
+* It removes the need for you setting the infamous 'uri_segment' setting
+
+Basically,it sets paging at the end of the uri, without having to pass a uri segment. The library relies on a unique pagination selector, which it uses to determine if and where the pagnition offset is located in the URI. 
+
+E.g. /example/pagination/Page/3
+
+The lib searches for the pagination_selector ('Page', in the above example) and retracts the proper offset value (in this case 3)
+The pagination links are automatically created, just as in CI's default pagination lib. The lib always puts pagination selector and offset at the end of the URI.
+
+h1. Requirements
+
+* Codeigniter 2+
+* PHP 5
+* A *unique* pagination selector (default is 'Page') - unique meaning a string you are sure will never appear in the uri, except for pagination.
+
+h1. How does it work?
+
+* Simply drop the lib in your application/libraries folder
+* Set a *unique* pagination selector (optional, default is 'Page')
+
+h1. Example usage:
+
+*Controller*
+@
+$this->load->library('pagination');
+$config['total_rows'] = 12;
+$config['per_page'] = 3;
+$this->pagination->initialize($config);
+$data['pagination'] = $this->pagination->create_links();
+
+$this->load->view('some_view', $data);
+@ 
+
+*View*
+@
+!isset($pagination) || echo pagination;
+@
+
+If, for instance, the current URI is index.php/example/pagination, this will create links to 
+* index.php/example/pagination/Page/3
+* index.php/example/pagination/Page/6
+* index.php/example/pagination/Page/9
+
+If, for instance, the current URI is some/example/of/some/uri, it will create links to 
+* some/example/of/some/uri/Page/3
+* some/example/of/some/uri/Page/6
+* Etc.

@@ -7,18 +7,33 @@ if (! defined('BASEPATH')) exit('No direct script access allowed');
  * @author Joost van Veen www.accentinteractive.nl
  * @created: Sun Jul 27 16:27:26 GMT 2008 16:27:26
  *
- * Extends CI's pagination class (http://codeigniter.com/user_guide/libraries/pagination.html)
- * It sets some variables for configuration of the pagination class dynamically,
- * depending on the URI, so we don't have to substract the offset from the URI,
- * or set $config['base_url'] and $config['uri_segment'] manually in the controller
+ * A simple Pagination extension to make working with pagination a bit easier.
+ * I created this lib because I had URIs in my app in which the paging element 
+ * was not always in the same segment, which makes it a pain if you work with 
+ * the default pagination class.
+ * 
+ * This simple lib accomplishes the following:
+ * - It determines waht the 'base_url' is, so you don't have to set it yourself
+ * - It removes the need for you setting the infamous 'uri_segment' setting
+ * 
+ * Basically,it sets paging at the end of the uri, without having to pass a uri 
+ * segment. The library relies on a unique pagination selector, which it uses to 
+ * determine if and where the pagnition offset is located in the URI. 
+ * 
+ * E.g. /example/pagination/Page/3
+ * 
+ * The lib searches for the pagination_selector ('Page', in the above example) 
+ * and retracts the proper offset value (in this case 3)
+ * 
+ * The pagination links are automatically created, just as in CI's default 
+ * pagination lib. 
  *
- * Here is what is set by this extension class:
- * 1. $this->offset - the current offset
- * 2. $this->uri_segment - the URI segment to be used for pagination
- * 3. $this->base_url - the base url to be used for pagination
- * (where $this refers to the pagination class)
- *
- * The way this works is simple:
+ * Requirements
+ * Codeigniter 2+
+ * PHP 5
+ * A *unique* pagination selector (default is 'Page') - unique meaning a string 
+ * you are sure will never appear in the uri, except for pagination.
+ * 
  * If there we use pagination, it must ALWAYS follow the following syntax and be
  * located at the END of the URI:
  * PAGINATION_SELECTOR/offset
