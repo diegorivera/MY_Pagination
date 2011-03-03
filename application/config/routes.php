@@ -38,7 +38,8 @@
 |
 */
 
-$route['default_controller'] = "welcome";
+$route['default_controller'] = "example";
+$route['MY_Pagination/(:any)'] = 'example/index';
 $route['404_override'] = '';
 
 
