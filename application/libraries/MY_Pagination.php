@@ -64,9 +64,10 @@ class MY_Pagination extends CI_Pagination
 
     var $index_page;
 
-    function MY_Pagination ()
-    {
-        parent::__construct();
+    function __construct($params = array()) {
+        
+        parent::__construct($params);
+        
         log_message('debug', "MY_Pagination Class Initialized");
         
         $this->index_page = config_item('index_page') != '' ? config_item('index_page') . '/' : '';
